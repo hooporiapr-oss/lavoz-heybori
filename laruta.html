@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hey Bori — La Voz PR</title>
+    <meta name="description" content="Talk to Bori, your bilingual AI voice guide to Puerto Rico.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #06080F;
+            --deep-card: #0c1019;
+            --blue: #2E7CF6;
+            --blue-bright: #5B9BFF;
+            --purple: #8B5CF6;
+            --purple-bright: #A78BFA;
+            --cyan: #22D3EE;
+            --white: #F1F5F9;
+            --muted: #94A3B8;
+            --border: rgba(139,92,246,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deep);
+            color: var(--white);
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ═══ COSMIC BG ═══ */
+        .cosmic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(46,124,246,0.08), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(139,92,246,0.07), transparent),
+                radial-gradient(ellipse 70% 40% at 50% 90%, rgba(34,211,238,0.05), transparent);
+        }
+
+        /* ═══ HEADER ═══ */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(6,8,15,0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .header-logo img {
+            height: 28px;
+        }
+
+        .header-logo span {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        .header-back {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.3s;
+        }
+
+        .header-back:hover { color: var(--white); }
+
+        /* ═══ MAIN CONTENT ═══ */
+        .agent-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* ═══ ORB ═══ */
+        .orb-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .orb-glow {
+            position: absolute;
+            inset: -30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(46,124,246,0.25), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .orb-glow.active {
+            opacity: 1;
+            animation: orbBreath 3s ease-in-out infinite;
+        }
+
+        .orb {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(46,124,246,0.3);
+            background: radial-gradient(circle at 40% 35%,
+                rgba(46,124,246,0.15),
+                rgba(139,92,246,0.1),
+                rgba(6,8,15,0.9));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .orb:hover {
+            transform: scale(1.05);
+            border-color: var(--blue);
+            box-shadow: 0 0 40px rgba(46,124,246,0.3);
+        }
+
+        .orb-icon {
+            font-size: 3.5rem;
+            transition: transform 0.3s;
+        }
+
+        /* ORB STATES */
+        .orb.listening {
+            border-color: var(--cyan);
+            box-shadow: 0 0 50px rgba(34,211,238,0.3);
+            animation: orbListen 2s ease-in-out infinite;
+        }
+
+        .orb.speaking {
+            border-color: var(--purple-bright);
+            box-shadow: 0 0 50px rgba(139,92,246,0.4);
+            animation: orbSpeak 1s ease-in-out infinite;
+        }
+
+        .orb.connecting {
+            border-color: var(--blue);
+            animation: orbConnect 1.5s linear infinite;
+        }
+
+        .orb.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 30px rgba(239,68,68,0.3);
+        }
+
+        @keyframes orbBreath {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        @keyframes orbListen {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        @keyframes orbSpeak {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        @keyframes orbConnect {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ═══ STATUS ═══ */
+        .status-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--muted);
+            min-height: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .status-text.active { color: var(--cyan); }
+        .status-text.speaking { color: var(--purple-bright); }
+        .status-text.error { color: #ef4444; }
+
+        .bori-label {
+            font-family: 'Fraunces', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .bori-sublabel {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        /* ═══ TRANSCRIPT ═══ */
+        .transcript-area {
+            max-width: 500px;
+            width: 100%;
+            max-height: 180px;
+            overflow-y: auto;
+            padding: 0 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(139,92,246,0.3) transparent;
+        }
+
+        .transcript-line {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .transcript-line.user {
+            background: rgba(34,211,238,0.08);
+            border-left: 2px solid var(--cyan);
+        }
+
+        .transcript-line.agent {
+            background: rgba(139,92,246,0.08);
+            border-left: 2px solid var(--purple);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══ END BUTTON ═══ */
+        .end-btn {
+            display: none;
+            padding: 0.6rem 1.5rem;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #f87171;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .end-btn:hover {
+            background: rgba(239,68,68,0.25);
+        }
+
+        .end-btn.visible { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+        /* ═══ FOOTER HINT ═══ */
+        .footer-hint {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(148,163,184,0.5);
+            background: linear-gradient(to top, var(--deep), transparent);
+        }
+
+        /* ═══ MOBILE ═══ */
+        @media (max-width: 640px) {
+            .orb-wrapper { width: 160px; height: 160px; }
+            .orb-icon { font-size: 2.8rem; }
+            .bori-label { font-size: 1.4rem; }
+            .transcript-area { max-height: 140px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <a href="index.html" class="header-logo">
+            <img src="lavozpr-logo.png" alt="La Voz PR" onerror="this.style.display='none'">
+            <span>La Voz PR</span>
+        </a>
+        <a href="index.html" class="header-back">← Back</a>
+    </div>
+
+    <!-- AGENT -->
+    <div class="agent-container">
+        <div class="bori-label">Bori</div>
+        <div class="bori-sublabel">La Voz de Puerto Rico</div>
+
+        <div class="orb-wrapper" id="orbWrapper">
+            <div class="orb-glow" id="orbGlow"></div>
+            <div class="orb" id="orb">
+                <span class="orb-icon" id="orbIcon">🎙️</span>
+            </div>
+        </div>
+
+        <div class="status-text" id="status">Tap the orb to talk to Bori</div>
+
+        <div class="transcript-area" id="transcript"></div>
+
+        <button class="end-btn" id="endBtn" onclick="endSession()">
+            ✕ End conversation
+        </button>
+    </div>
+
+    <div class="footer-hint">
+        La Voz PR — GoStar Digital LLC, Puerto Rico
+    </div>
+
+    <script>
+    // ═══════════════════════════════════════════════════════
+    // LA VOZ PR — BORI VOICE AGENT v4.0.0
+    // Direct Deepgram — NO backend server
+    // ═══════════════════════════════════════════════════════
+
+    // ── CONFIG ──
+    // *** IMPORTANT: Update this URL after deploying your Cloudflare Worker ***
+    const TOKEN_URL = 'https://lavozpr-worker.hooporiapr.workers.dev/token';
+
+    const DEEPGRAM_WS = 'wss://agent.deepgram.com/v1/agent/converse';
+    const ELEVENLABS_VOICE_ID = 'jzmAudEi0DeODCFmt4mt';
+
+    // ── BORI SYSTEM PROMPT ──
+    const BORI_PROMPT = `You are Bori — La Voz de Puerto Rico. You are the bilingual AI voice guide for La Voz PR (lavozpr.com), built by GoStar Digital LLC in Puerto Rico.
+
+CORE IDENTITY:
+- Your name is Bori. You are La Voz — The Voice of Puerto Rico.
+- You are warm, knowledgeable, and authentically Puerto Rican.
+- You are NOT a language learning app. You are a cultural voice guide.
+
+LANGUAGE MIRRORING — THIS IS YOUR #1 RULE:
+- If the user speaks Spanish → respond in full Puerto Rican Spanish
+- If the user speaks English → respond in English with bilingual code-switching
+- If the user mixes → match their mix naturally
+- Always mirror the speaker's language. Never force a language switch.
+
+PERSONALITY:
+- Warm, proud, knowledgeable about Puerto Rico
+- Use natural boricua expressions: Mira, Wepa, Oye, Dime, or just start talking
+- "Ay" is ONLY for "Ay bendito" (sadness) or "Ay Dios mío" — NEVER as a casual opener
+- Keep responses concise for voice — 2-3 sentences max unless asked for detail
+- Be conversational, not robotic
+
+KNOWLEDGE AREAS:
+- All 78 municipalities of Puerto Rico — history, culture, food, landmarks
+- Puerto Rican food, music (salsa, reggaetón, bomba, plena), traditions
+- Local tips, hidden gems, beaches, mountains, El Yunque, Old San Juan
+- Current events, festivals, nightlife, family activities
+- Practical info: transportation, weather, safety, neighborhoods
+
+CULTURAL ACCURACY:
+- Loíza vejigante masks = COCONUT shells (Ayala family tradition). Ponce = papier-mâché.
+- Know the difference between regions: Metro, North, South, East, West, Central mountains
+- Respect for Taíno heritage, African roots, Spanish colonial history
+
+THE SHOUT MASTER — SPONSOR MENTIONS:
+When users ask about esports, gaming, tournaments, or GAMERGY, mention:
+"Check out the Puerto Rico Esports League at puertoricoesportleague.com — they're doing big things for gaming on the island!"
+
+GREETING (first message):
+"Hey! I'm Bori — La Voz de Puerto Rico. 🇵🇷 Ask me anything about the island — culture, food, music, beaches, hidden gems, you name it. ¡Dime! What do you want to know?"
+
+La Ruta™ is La Voz PR's signature experience — a voice-guided journey through Puerto Rico's culture, regions, and hidden gems.`;
+
+    // ── STATE ──
+    let ws = null;
+    let audioContext = null;
+    let micStream = null;
+    let scriptProcessor = null;
+    let micMuted = false;
+    let isConnected = false;
+    let isSpeaking = false;
+    let scheduledTime = 0;
+    let watchdogTimer = null;
+
+    // ── DOM ──
+    const orb = document.getElementById('orb');
+    const orbGlow = document.getElementById('orbGlow');
+    const orbIcon = document.getElementById('orbIcon');
+    const status = document.getElementById('status');
+    const transcript = document.getElementById('transcript');
+    const endBtn = document.getElementById('endBtn');
+
+    // ── ORB TAP ──
+    document.getElementById('orbWrapper').addEventListener('click', () => {
+        if (isConnected) return;
+        startSession();
+    });
+
+    // ── SESSION START ──
+    async function startSession() {
+        setOrbState('connecting');
+        setStatus('Connecting to Bori...', '');
+
+        try {
+            // Init AudioContext (Safari needs user gesture)
+            audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+            scheduledTime = 0;
+
+            // Get token from Cloudflare Worker
+            const tokenRes = await fetch(TOKEN_URL);
+            if (!tokenRes.ok) throw new Error('Token fetch failed');
+            const tokenData = await tokenRes.json();
+            const token = tokenData.token;
+
+            if (!token) throw new Error('No token received');
+
+            // Connect to Deepgram Agent
+            ws = new WebSocket(DEEPGRAM_WS, ['token', token]);
+            ws.binaryType = 'arraybuffer';
+
+            ws.onopen = () => {
+                console.log('[WS] Connected to Deepgram');
+                sendSettings();
+                startMic();
+                isConnected = true;
+                setOrbState('listening');
+                setStatus('Bori is listening...', 'active');
+                endBtn.classList.add('visible');
+                startWatchdog();
+            };
+
+            ws.onmessage = (event) => {
+                if (event.data instanceof ArrayBuffer) {
+                    handleAudio(event.data);
+                } else {
+                    handleMessage(JSON.parse(event.data));
+                }
+            };
+
+            ws.onerror = (err) => {
+                console.error('[WS] Error:', err);
+                setOrbState('error');
+                setStatus('Connection error — tap to retry', 'error');
+                cleanup();
+            };
+
+            ws.onclose = (e) => {
+                console.log('[WS] Closed:', e.code, e.reason);
+                if (isConnected) {
+                    setStatus('Connection ended — tap to reconnect', '');
+                    setOrbState('idle');
+                }
+                cleanup();
+            };
+
+        } catch (err) {
+            console.error('[Session] Error:', err);
+            setOrbState('error');
+            setStatus('Failed to connect — tap to retry', 'error');
+            cleanup();
+        }
+    }
+
+    // ── SEND SETTINGS ──
+    function sendSettings() {
+        const settings = {
+            type: 'Settings',
+            audio: {
+                input: { encoding: 'linear16', sample_rate: 16000 },
+                output: { encoding: 'linear16', sample_rate: 24000, container: 'none' }
+            },
+            agent: {
+                listen: {
+                    provider: { type: 'deepgram', model: 'nova-3', language: 'multi' },
+                    keyterms: [
+                        'Bori', 'La Voz', 'Puerto Rico', 'Boricua', 'La Ruta',
+                        'vejigante', 'Loíza', 'Ponce', 'San Juan', 'El Yunque',
+                        'mofongo', 'alcapurrias', 'lechón', 'pasteles', 'coquito',
+                        'bomba', 'plena', 'reggaetón', 'salsa',
+                        'GAMERGY', 'esports'
+                    ]
+                },
+                think: {
+                    provider: { type: 'anthropic', model: 'claude-sonnet-4-6' },
+                    prompt: BORI_PROMPT,
+                    temperature: 0.7
+                },
+                speak: {
+                    provider: {
+                        type: 'eleven_labs',
+                        model: 'eleven_turbo_v2_5',
+                        voice_id: ELEVENLABS_VOICE_ID,
+                        language_code: 'multi'
+                    },
+                    endpoint: `wss://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}/multi-stream-input`
+                },
+                greeting: "Hey! I'm Bori, La Voz de Puerto Rico. Ask me anything about the island — culture, food, music, beaches, hidden gems. ¡Dime! What do you want to know?"
+            }
+        };
+
+        ws.send(JSON.stringify(settings));
+        console.log('[WS] Settings sent');
+    }
+
+    // ── MICROPHONE ──
+    async function startMic() {
+        try {
+            micStream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 16000
+                }
+            });
+
+            const micCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+            const source = micCtx.createMediaStreamSource(micStream);
+            scriptProcessor = micCtx.createScriptProcessor(4096, 1, 1);
+
+            scriptProcessor.onaudioprocess = (e) => {
+                if (micMuted || !ws || ws.readyState !== WebSocket.OPEN) return;
+
+                const float32 = e.inputBuffer.getChannelData(0);
+                const int16 = new Int16Array(float32.length);
+                for (let i = 0; i < float32.length; i++) {
+                    const s = Math.max(-1, Math.min(1, float32[i]));
+                    int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                }
+                ws.send(int16.buffer);
+            };
+
+            source.connect(scriptProcessor);
+            scriptProcessor.connect(micCtx.destination);
+            console.log('[Mic] Started');
+
+        } catch (err) {
+            console.error('[Mic] Error:', err);
+            setStatus('Microphone access denied', 'error');
+            setOrbState('error');
+        }
+    }
+
+    // ── HANDLE MESSAGES ──
+    function handleMessage(msg) {
+        console.log('[MSG]', msg.type, msg);
+
+        switch (msg.type) {
+            case 'AgentStartedSpeaking':
+                isSpeaking = true;
+                micMuted = true;
+                setOrbState('speaking');
+                setStatus('Bori is speaking...', 'speaking');
+                clearWatchdog();
+                break;
+
+            case 'AgentStoppedSpeaking':
+                isSpeaking = false;
+                setTimeout(() => {
+                    micMuted = false;
+                    setOrbState('listening');
+                    setStatus('Bori is listening...', 'active');
+                    startWatchdog();
+                }, 500);
+                break;
+
+            case 'UserStartedSpeaking':
+                clearWatchdog();
+                setOrbState('listening');
+                setStatus('Listening...', 'active');
+                break;
+
+            case 'ConversationText':
+                addTranscript(msg.role, msg.content);
+                break;
+
+            case 'Error':
+                console.error('[Agent Error]', msg);
+                setStatus('Bori had a hiccup — try again', 'error');
+                break;
+        }
+    }
+
+    // ── AUDIO PLAYBACK (Gapless Web Audio) ──
+    function handleAudio(arrayBuffer) {
+        if (!audioContext) return;
+
+        const int16 = new Int16Array(arrayBuffer);
+        const float32 = new Float32Array(int16.length);
+        for (let i = 0; i < int16.length; i++) {
+            float32[i] = int16[i] / 32768;
+        }
+
+        const buffer = audioContext.createBuffer(1, float32.length, 24000);
+        buffer.getChannelData(0).set(float32);
+
+        const source = audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioContext.destination);
+
+        const now = audioContext.currentTime;
+        const startTime = Math.max(now, scheduledTime);
+        source.start(startTime);
+        scheduledTime = startTime + buffer.duration;
+    }
+
+    // ── WATCHDOG ──
+    function startWatchdog() {
+        clearWatchdog();
+        watchdogTimer = setTimeout(() => {
+            if (ws && ws.readyState === WebSocket.OPEN && !isSpeaking && !micMuted) {
+                console.log('[Watchdog] Nudging agent');
+                ws.send(JSON.stringify({
+                    type: 'InjectAgentMessage',
+                    message: "The user seems quiet. Gently check in: '¿Sigues ahí? Still there? I'm here whenever you're ready!'"
+                }));
+            }
+        }, 20000);
+    }
+
+    function clearWatchdog() {
+        if (watchdogTimer) {
+            clearTimeout(watchdogTimer);
+            watchdogTimer = null;
+        }
+    }
+
+    // ── UI HELPERS ──
+    function setOrbState(state) {
+        orb.className = 'orb';
+        orbGlow.classList.remove('active');
+
+        switch (state) {
+            case 'idle':
+                orbIcon.textContent = '🎙️';
+                break;
+            case 'connecting':
+                orb.classList.add('connecting');
+                orbIcon.textContent = '⏳';
+                break;
+            case 'listening':
+                orb.classList.add('listening');
+                orbGlow.classList.add('active');
+                orbIcon.textContent = '🎙️';
+                break;
+            case 'speaking':
+                orb.classList.add('speaking');
+                orbGlow.classList.add('active');
+                orbIcon.textContent = '🗣️';
+                break;
+            case 'error':
+                orb.classList.add('error');
+                orbIcon.textContent = '⚠️';
+                break;
+        }
+    }
+
+    function setStatus(text, className) {
+        status.textContent = text;
+        status.className = 'status-text' + (className ? ' ' + className : '');
+    }
+
+    function addTranscript(role, text) {
+        if (!text) return;
+        const div = document.createElement('div');
+        div.className = 'transcript-line ' + (role === 'user' ? 'user' : 'agent');
+        div.textContent = (role === 'user' ? 'You: ' : 'Bori: ') + text;
+        transcript.appendChild(div);
+        transcript.scrollTop = transcript.scrollHeight;
+    }
+
+    // ── END SESSION ──
+    function endSession() {
+        cleanup();
+        setOrbState('idle');
+        setStatus('Tap the orb to talk to Bori', '');
+        endBtn.classList.remove('visible');
+    }
+
+    function cleanup() {
+        isConnected = false;
+        isSpeaking = false;
+        micMuted = false;
+        clearWatchdog();
+
+        if (ws) {
+            ws.close();
+            ws = null;
+        }
+        if (micStream) {
+            micStream.getTracks().forEach(t => t.stop());
+            micStream = null;
+        }
+        if (scriptProcessor) {
+            scriptProcessor.disconnect();
+            scriptProcessor = null;
+        }
+    }
+
+    // ── PREVENT SLEEP ON MOBILE ──
+    let wakeLock = null;
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+            }
+        } catch (e) {}
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && isConnected) {
+            requestWakeLock();
+        }
+    });
+
+    console.log('[La Voz PR] Bori Voice Agent v4.0.0 — Direct Deepgram, No Backend');
+    </script>
+</body>
+</html>
