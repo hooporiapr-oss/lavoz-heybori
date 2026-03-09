@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Voz PR — The Voice of Puerto Rico</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #06080F;
+            --blue: #2E7CF6;
+            --blue-bright: #5B9BFF;
+            --purple: #8B5CF6;
+            --purple-bright: #A78BFA;
+            --cyan: #22D3EE;
+            --white: #F1F5F9;
+            --muted: #94A3B8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deep);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .cosmic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(46,124,246,0.08), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(139,92,246,0.07), transparent),
+                radial-gradient(ellipse 70% 40% at 50% 90%, rgba(34,211,238,0.05), transparent);
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--blue-bright), var(--purple-bright), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+        .orb-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgba(46,124,246,0.4);
+            background: radial-gradient(circle at 40% 35%, rgba(46,124,246,0.15), rgba(139,92,246,0.1), rgba(6,8,15,0.9));
+            text-decoration: none;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        .orb-link:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(46,124,246,0.4);
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(46,124,246,0.2); }
+            50% { box-shadow: 0 0 40px rgba(46,124,246,0.4); }
+        }
+        .cta-text {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .cta-sub {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(148,163,184,0.4);
+        }
+        .footer a {
+            color: rgba(148,163,184,0.5);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="content">
+        <h1>The <span class="gradient-text">Voice</span> of Puerto Rico</h1>
+        <p class="tagline">Meet Bori — your bilingual AI guide to the island</p>
+        <a href="laruta.html" class="orb-link">🎙️</a>
+        <p class="cta-text">Hey Bori</p>
+        <p class="cta-sub">Tap the orb to start talking</p>
+    </div>
+    <div class="footer">
+        <p>GoStar Digital LLC, Puerto Rico &nbsp;|&nbsp; <a href="privacy.html">Privacy</a> &nbsp;|&nbsp; <a href="terms.html">Terms</a></p>
+    </div>
+</body>
+</html>
