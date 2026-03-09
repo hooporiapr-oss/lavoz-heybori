@@ -178,9 +178,22 @@ async function startMic(){
 function handleMsg(msg){
     console.log('[Bori]',msg.type,msg.description||'');
     switch(msg.type){
-        case'AgentStartedSpeaking':isSpeaking=true;micMuted=true;setOrb('speaking');setStatus('Bori is speaking...','speaking');clearWatchdog();break;
-        case'AgentStoppedSpeaking':isSpeaking=false;setTimeout(()=>{micMuted=false;setOrb('listening');setStatus('Bori is listening...','active');startWatchdog()},500);break;
-        case'UserStartedSpeaking':clearWatchdog();setOrb('listening');setStatus('Listening...','active');break;
+        case'AgentStartedSpeaking':
+            isSpeaking=true;micMuted=true;
+            setOrb('speaking');setStatus('Bori is speaking...','speaking');clearWatchdog();
+            // Safety: force unmute after 15 seconds in case AgentStoppedSpeaking never fires
+            if(window._safetyUnmute)clearTimeout(window._safetyUnmute);
+            window._safetyUnmute=setTimeout(()=>{
+                if(micMuted){console.log('[Bori] SAFETY UNMUTE');micMuted=false;isSpeaking=false;setOrb('listening');setStatus('Bori is listening...','active');startWatchdog()}
+            },15000);
+            break;
+        case'AgentAudioDone':
+        case'AgentStoppedSpeaking':
+            isSpeaking=false;micMuted=false;
+            setOrb('listening');setStatus('Bori is listening...','active');startWatchdog();
+            console.log('[Bori] Mic UNMUTED');
+            break;
+        case'UserStartedSpeaking':clearWatchdog();setOrb('listening');setStatus('Listening...','active');console.log('[Bori] User speaking detected');break;
         case'ConversationText':addLine(msg.role,msg.content);break;
         case'Error':console.error('[Bori] Error:',msg.description);setStatus('Error: '+(msg.description||'unknown'),'error');break;
     }
