@@ -17,7 +17,6 @@
             --cyan: #22D3EE;
             --white: #F1F5F9;
             --muted: #94A3B8;
-            --border: rgba(139,92,246,0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -97,7 +96,6 @@
             opacity: 0;
             transition: opacity 0.6s;
         }
-
         .orb-glow.active {
             opacity: 1;
             animation: orbBreath 3s ease-in-out infinite;
@@ -118,143 +116,63 @@
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             animation: orbIdle 3s ease-in-out infinite;
         }
-
         .orb:hover {
             transform: scale(1.08);
             box-shadow: 0 0 50px rgba(46,124,246,0.4);
         }
-
         .orb-icon { font-size: 3rem; }
 
-        .orb.listening {
-            border-color: var(--cyan);
-            box-shadow: 0 0 50px rgba(34,211,238,0.3);
-            animation: orbListen 2s ease-in-out infinite;
-        }
+        .orb.listening { border-color: var(--cyan); box-shadow: 0 0 50px rgba(34,211,238,0.3); animation: orbListen 2s ease-in-out infinite; }
+        .orb.speaking { border-color: var(--purple-bright); box-shadow: 0 0 50px rgba(139,92,246,0.4); animation: orbSpeak 1s ease-in-out infinite; }
+        .orb.connecting { border-color: var(--blue); opacity: 0.7; animation: orbPulseConnect 1.5s ease-in-out infinite; }
+        .orb.error { border-color: #ef4444; box-shadow: 0 0 30px rgba(239,68,68,0.3); animation: none; }
 
-        .orb.speaking {
-            border-color: var(--purple-bright);
-            box-shadow: 0 0 50px rgba(139,92,246,0.4);
-            animation: orbSpeak 1s ease-in-out infinite;
-        }
+        @keyframes orbIdle { 0%, 100% { box-shadow: 0 0 20px rgba(46,124,246,0.2); } 50% { box-shadow: 0 0 40px rgba(46,124,246,0.35); } }
+        @keyframes orbBreath { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.15); opacity: 1; } }
+        @keyframes orbListen { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+        @keyframes orbSpeak { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+        @keyframes orbPulseConnect { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        .orb.connecting {
-            border-color: var(--blue);
-            opacity: 0.7;
-            animation: orbPulseConnect 1.5s ease-in-out infinite;
-        }
+        .cta-text { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; }
 
-        .orb.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 30px rgba(239,68,68,0.3);
-            animation: none;
-        }
-
-        @keyframes orbIdle {
-            0%, 100% { box-shadow: 0 0 20px rgba(46,124,246,0.2); }
-            50% { box-shadow: 0 0 40px rgba(46,124,246,0.35); }
-        }
-        @keyframes orbBreath {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.15); opacity: 1; }
-        }
-        @keyframes orbListen {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04); }
-        }
-        @keyframes orbSpeak {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-        }
-        @keyframes orbPulseConnect {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .cta-text {
-            font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .status-text {
-            font-size: 0.95rem;
-            color: var(--muted);
-            min-height: 1.4em;
-            transition: color 0.3s;
-        }
+        .status-text { font-size: 0.95rem; color: var(--muted); min-height: 1.4em; transition: color 0.3s; }
         .status-text.active { color: var(--cyan); }
         .status-text.speaking { color: var(--purple-bright); }
         .status-text.error { color: #ef4444; }
 
         .transcript-area {
-            max-width: 500px;
-            width: 100%;
-            max-height: 0;
-            overflow-y: auto;
-            transition: max-height 0.5s ease;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(139,92,246,0.3) transparent;
+            max-width: 500px; width: 100%; max-height: 0;
+            overflow-y: auto; transition: max-height 0.5s ease;
+            scrollbar-width: thin; scrollbar-color: rgba(139,92,246,0.3) transparent;
         }
         .transcript-area.open { max-height: 200px; margin-top: 0.75rem; }
 
         .transcript-line {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 0.4rem;
-            padding: 0.4rem 0.75rem;
-            border-radius: 8px;
-            text-align: left;
+            font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem;
+            padding: 0.4rem 0.75rem; border-radius: 8px; text-align: left;
             animation: fadeIn 0.3s ease;
         }
-        .transcript-line.user {
-            background: rgba(34,211,238,0.08);
-            border-left: 2px solid var(--cyan);
-        }
-        .transcript-line.agent {
-            background: rgba(139,92,246,0.08);
-            border-left: 2px solid var(--purple);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .transcript-line.user { background: rgba(34,211,238,0.08); border-left: 2px solid var(--cyan); }
+        .transcript-line.agent { background: rgba(139,92,246,0.08); border-left: 2px solid var(--purple); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         .end-btn {
-            display: none;
-            padding: 0.5rem 1.25rem;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.25);
-            color: #f87171;
-            border-radius: 50px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 0.5rem;
+            display: none; padding: 0.5rem 1.25rem;
+            background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+            color: #f87171; border-radius: 50px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: background 0.3s; margin-top: 0.5rem;
         }
         .end-btn:hover { background: rgba(239,68,68,0.2); }
         .end-btn.visible { display: inline-flex; align-items: center; gap: 0.3rem; }
 
         .footer {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.7rem;
-            color: rgba(148,163,184,0.35);
-            background: linear-gradient(to top, var(--deep), transparent);
-            z-index: 1;
+            position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem;
+            text-align: center; font-size: 0.7rem; color: rgba(148,163,184,0.35);
+            background: linear-gradient(to top, var(--deep), transparent); z-index: 1;
         }
 
-        body.agent-active h1 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            margin-bottom: 0;
-        }
-        body.agent-active .tagline {
-            opacity: 0; height: 0; margin: 0; overflow: hidden;
-        }
+        body.agent-active h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 0; }
+        body.agent-active .tagline { opacity: 0; height: 0; margin: 0; overflow: hidden; }
 
         @media (max-width: 640px) {
             .orb-wrapper { width: 130px; height: 130px; }
@@ -287,13 +205,12 @@
 
     <script>
     // ═══════════════════════════════════════════════════════
-    // LA VOZ PR — BORI v4.1.0
-    // Single page. Direct Deepgram. No backend. Bearer auth.
+    // LA VOZ PR — BORI v4.3.0
+    // Full Deepgram stack. Selena voice. No ElevenLabs. No backend.
     // ═══════════════════════════════════════════════════════
 
     const TOKEN_URL = 'https://lavozpr-worker.hooporiapr.workers.dev/token';
     const DEEPGRAM_WS = 'wss://agent.deepgram.com/v1/agent/converse';
-    const EL_VOICE = 'jzmAudEi0DeODCFmt4mt';
 
     const BORI_PROMPT = `You are Bori — La Voz de Puerto Rico. You are the bilingual AI voice guide for La Voz PR (lavozpr.com), built by GoStar Digital LLC in Puerto Rico.
 
@@ -370,7 +287,6 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
             const data = await res.json();
             if (!data.token) throw new Error('No token in response');
 
-            // Connect with bearer auth for JWT tokens
             ws = new WebSocket(DEEPGRAM_WS, ['bearer', data.token]);
             ws.binaryType = 'arraybuffer';
 
@@ -404,7 +320,7 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
             };
 
             ws.onclose = (e) => {
-                console.error('[Bori] WebSocket closed. Code:', e.code, 'Reason:', e.reason, 'Clean:', e.wasClean);
+                console.error('[Bori] Closed. Code:', e.code, 'Reason:', e.reason);
                 if (isConnected) {
                     setStatus('Ended (code ' + e.code + ') — tap to reconnect', '');
                     setOrb('idle');
@@ -444,16 +360,14 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
                 },
                 speak: {
                     provider: {
-                        type: 'eleven_labs',
-                        model: 'eleven_turbo_v2_5',
-                        voice_id: EL_VOICE,
-                        language_code: 'multi'
-                    },
-                    endpoint: 'wss://api.elevenlabs.io/v1/text-to-speech/' + EL_VOICE + '/multi-stream-input'
+                        type: 'deepgram',
+                        model: 'aura-2-selena-es'
+                    }
                 },
                 greeting: "Hey! I'm Bori, La Voz de Puerto Rico. Ask me anything about the island — culture, food, music, beaches, hidden gems. ¡Dime! What do you want to know?"
             }
         }));
+        console.log('[Bori] Settings sent — Deepgram Selena voice');
     }
 
     async function startMic() {
@@ -486,7 +400,7 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
     }
 
     function handleMsg(msg) {
-        console.log('[Bori] Message:', msg.type);
+        console.log('[Bori]', msg.type, msg);
         switch (msg.type) {
             case 'AgentStartedSpeaking':
                 isSpeaking = true;
@@ -511,6 +425,10 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
                 break;
             case 'ConversationText':
                 addLine(msg.role, msg.content);
+                break;
+            case 'Error':
+                console.error('[Bori] Agent error:', msg);
+                setStatus('Error: ' + (msg.description || 'unknown'), 'error');
                 break;
         }
     }
@@ -603,7 +521,7 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
         if (document.visibilityState === 'visible' && isConnected) requestWake();
     });
 
-    console.log('[La Voz PR] Bori v4.1.0 — Direct Deepgram, No Backend, Bearer Auth');
+    console.log('[La Voz PR] Bori v4.3.0 — Full Deepgram, Selena voice, No Backend');
     </script>
 </body>
 </html>
