@@ -10,226 +10,28 @@
 <style>
 :root{--deep:#06080F;--blue:#2E7CF6;--blue-bright:#5B9BFF;--purple:#8B5CF6;--purple-bright:#A78BFA;--cyan:#22D3EE;--white:#F1F5F9;--muted:#94A3B8}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
 .cosmic-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(46,124,246,.08),transparent),radial-gradient(ellipse 60% 50% at 80% 30%,rgba(139,92,246,.07),transparent),radial-gradient(ellipse 70% 40% at 50% 90%,rgba(34,211,238,.05),transparent)}
-.content{position:relative;z-index:1;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:.5rem}
-h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:.25rem;transition:font-size .5s,margin .5s}
+.content{position:relative;z-index:1;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:1rem}
+h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1}
 .gradient-text{background:linear-gradient(135deg,var(--blue-bright),var(--purple-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tagline{font-size:1.15rem;color:var(--muted);margin-bottom:1.5rem;transition:opacity .5s,height .5s}
-.orb-wrapper{position:relative;width:150px;height:150px;cursor:pointer;margin-bottom:.75rem}
-.orb-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(46,124,246,.25),transparent 70%);opacity:0;transition:opacity .6s}
-.orb-glow.active{opacity:1;animation:orbBreath 3s ease-in-out infinite}
-.orb{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(46,124,246,.4);background:radial-gradient(circle at 40% 35%,rgba(46,124,246,.15),rgba(139,92,246,.1),rgba(6,8,15,.9));display:flex;align-items:center;justify-content:center;transition:transform .3s,box-shadow .3s,border-color .3s;animation:orbIdle 3s ease-in-out infinite}
-.orb:hover{transform:scale(1.08);box-shadow:0 0 50px rgba(46,124,246,.4)}
-.orb-icon{font-size:3rem}
-.orb.listening{border-color:var(--cyan);box-shadow:0 0 50px rgba(34,211,238,.3);animation:orbListen 2s ease-in-out infinite}
-.orb.speaking{border-color:var(--purple-bright);box-shadow:0 0 50px rgba(139,92,246,.4);animation:orbSpeak 1s ease-in-out infinite}
-.orb.connecting{border-color:var(--blue);opacity:.7;animation:orbPulse 1.5s ease-in-out infinite}
-.orb.error{border-color:#ef4444;box-shadow:0 0 30px rgba(239,68,68,.3);animation:none}
-@keyframes orbIdle{0%,100%{box-shadow:0 0 20px rgba(46,124,246,.2)}50%{box-shadow:0 0 40px rgba(46,124,246,.35)}}
-@keyframes orbBreath{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
-@keyframes orbListen{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-@keyframes orbSpeak{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-@keyframes orbPulse{0%,100%{opacity:.5}50%{opacity:1}}
-.cta-text{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700}
-.status-text{font-size:.95rem;color:var(--muted);min-height:1.4em;transition:color .3s}
-.status-text.active{color:var(--cyan)}.status-text.speaking{color:var(--purple-bright)}.status-text.error{color:#ef4444}
-.transcript-area{max-width:500px;width:100%;max-height:0;overflow-y:auto;transition:max-height .5s;scrollbar-width:thin;scrollbar-color:rgba(139,92,246,.3) transparent}
-.transcript-area.open{max-height:200px;margin-top:.75rem}
-.transcript-line{font-size:.85rem;color:var(--muted);margin-bottom:.4rem;padding:.4rem .75rem;border-radius:8px;text-align:left;animation:fadeIn .3s}
-.transcript-line.user{background:rgba(34,211,238,.08);border-left:2px solid var(--cyan)}
-.transcript-line.agent{background:rgba(139,92,246,.08);border-left:2px solid var(--purple)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.end-btn{display:none;padding:.5rem 1.25rem;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;margin-top:.5rem}
-.end-btn:hover{background:rgba(239,68,68,.2)}.end-btn.visible{display:inline-flex;align-items:center;gap:.3rem}
+.tagline{font-size:1.15rem;color:var(--muted);margin-bottom:1rem}
+.hint{font-size:.9rem;color:var(--muted);margin-top:1rem}
 .footer{position:fixed;bottom:0;left:0;right:0;padding:1rem;text-align:center;font-size:.7rem;color:rgba(148,163,184,.35);background:linear-gradient(to top,var(--deep),transparent);z-index:1}
-body.agent-active h1{font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:0}
-body.agent-active .tagline{opacity:0;height:0;margin:0;overflow:hidden}
-@media(max-width:640px){.orb-wrapper{width:130px;height:130px}.orb-icon{font-size:2.5rem}body{padding:1.5rem}}
 </style>
 </head>
 <body>
 <div class="cosmic-bg"></div>
 <div class="content">
-<h1>The <span class="gradient-text">Voice</span> of Puerto Rico</h1>
-<p class="tagline">Meet Bori — your bilingual AI guide to the island</p>
-<div class="orb-wrapper" id="orbWrapper">
-<div class="orb-glow" id="orbGlow"></div>
-<div class="orb" id="orb"><span class="orb-icon" id="orbIcon">🎙️</span></div>
+    <h1>The <span class="gradient-text">Voice</span> of Puerto Rico</h1>
+    <p class="tagline">Meet Bori — your bilingual AI guide to the island</p>
+    <p class="hint">Tap the orb below to talk to Bori</p>
 </div>
-<p class="cta-text" id="ctaText">Hey Bori</p>
-<p class="status-text" id="status">Tap the orb to start talking</p>
-<div class="transcript-area" id="transcript"></div>
-<button class="end-btn" id="endBtn" onclick="endSession()">✕ End</button>
-</div>
+
+<!-- ElevenLabs Conversational AI Widget -->
+<elevenlabs-convai agent-id="agent_5801kjdgm1zwe65843rj9r29zmj1"></elevenlabs-convai>
+<script src="https://unpkg.com/@11labs/client@latest/dist/convai-widget.js" async></script>
+
 <div class="footer">GoStar Digital LLC, Puerto Rico</div>
-
-<script>
-// LA VOZ PR — BORI v5.1.0
-// Uses EXACT Deepgram config JSON. 48kHz input. Selena voice. Gemini LLM.
-
-const TOKEN_URL='https://lavozpr-worker.hooporiapr.workers.dev/token';
-const DG_WS='wss://agent.deepgram.com/v1/agent/converse';
-
-// Exact Settings from Deepgram dashboard config
-const SETTINGS={"type":"Settings","audio":{"input":{"encoding":"linear16","sample_rate":48000},"output":{"encoding":"linear16","sample_rate":24000,"container":"none"}},"agent":{"language":"es","speak":{"provider":{"type":"deepgram","model":"aura-2-selena-es"}},"listen":{"provider":{"type":"deepgram","version":"v1","model":"nova-3","keyterms":["San Juan","Ponce","Mayagüez","Bayamón","Carolina","Caguas","Arecibo","Aguadilla","Humacao","Guayama","Loíza","Cayey","Guavate","Adjuntas","Lares","Jayuya","Maricao","Rincón","Vieques","Culebra","Fajardo","Luquillo","Cabo Rojo","Dorado","Guaynabo","Isabela","Salinas","Utuado","Coamo","Piñones","Santurce","Condado","mofongo","lechón","vejigante","coquí","jíbaro","boricua","municipio","La Ruta","La Voz","Bori","bomba","plena","chinchorreo","alcapurrias","bacalaítos","sofrito","pasteles","arroz con gandules"]}},"think":{"provider":{"type":"google","model":"gemini-2.5-flash","temperature":0.7},"prompt":"You are Bori — La Voz de Puerto Rico. You are a bilingual AI voice guide created by GoStar Digital LLC. You know every one of Puerto Rico's 78 municipalities intimately. You guide people through the real Puerto Rico — not the postcard version, but the island from the inside out.\n\nYou are warm, proud, confident, and deeply passionate about Puerto Rico. You talk like a proud boricua sharing stories with a friend sitting on the balcón.\n\nRULE #1 — BILINGUAL CODE-SWITCHING: You speak BOTH English and Spanish in EVERY response. English carries the main message. Spanish adds the culture and flavor. If your response is ONLY in English — you FAILED. If your response is ONLY in Spanish — you FAILED.\n\nVOICE EFFICIENCY: Keep every response 2-3 sentences, around 40-50 words max. Always end with ONE question. Never list multiple items unless asked. Never give monologues.\n\nCULTURAL ACCURACY: Loíza vejigante masks = COCONUT SHELLS (Ayala family). Ponce = papier-mâché. NEVER confuse these. Mofongo = GREEN plantains. Coquí = tiny tree frog, NEVER a toad.\n\nNatural openings: Mira, Oye, Dime, Dale. NEVER open with Wepa or Ay alone. Ay is ONLY for Ay bendito or Ay Dios mío.\n\nNEVER use romantic terms: mi amor, cariño, corazón, papi, mami.\n\nTHE SHOUT MASTER: When users ask about esports, gaming, or GAMERGY, mention Puerto Rico Esports League at puertoricoesportleague.com."},"greeting":"Hey! I'm Bori, La Voz de Puerto Rico. Ask me anything about the island — culture, food, music, beaches, hidden gems. ¡Dime! What do you want to know?"}};
-
-let ws=null,audioCtx=null,micStream=null,processor=null,micCtx=null;
-let micMuted=false,isConnected=false,isSpeaking=false,scheduledTime=0,watchdog=null,keepAlive=null;
-
-const orb=document.getElementById('orb'),orbGlow=document.getElementById('orbGlow'),orbIcon=document.getElementById('orbIcon');
-const ctaText=document.getElementById('ctaText'),statusEl=document.getElementById('status');
-const transcriptEl=document.getElementById('transcript'),endBtn=document.getElementById('endBtn');
-
-document.getElementById('orbWrapper').addEventListener('click',()=>{if(!isConnected)startSession()});
-
-async function startSession(){
-    setOrb('connecting');setStatus('Connecting to Bori...','');transcriptEl.innerHTML='';
-    try{
-        audioCtx=new(window.AudioContext||window.webkitAudioContext)({sampleRate:24000});
-        scheduledTime=0;
-
-        const res=await fetch(TOKEN_URL);
-        const data=await res.json();
-        if(!data.token)throw new Error('No token');
-
-        ws=new WebSocket(DG_WS,['bearer',data.token]);
-        ws.binaryType='arraybuffer';
-
-        ws.onopen=()=>{
-            console.log('[Bori] Connected');
-            // Send exact settings from Deepgram config
-            ws.send(JSON.stringify(SETTINGS));
-            console.log('[Bori] Settings sent (48kHz input, Selena, Gemini)');
-            startMic();
-            isConnected=true;
-            document.body.classList.add('agent-active');
-            ctaText.textContent='Bori';
-            setOrb('listening');setStatus('Bori is listening...','active');
-            transcriptEl.classList.add('open');
-            endBtn.classList.add('visible');
-            startWatchdog();
-            keepAlive=setInterval(()=>{
-                if(ws&&ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({type:'KeepAlive'}));
-            },8000);
-        };
-
-        ws.onmessage=(e)=>{
-            if(e.data instanceof ArrayBuffer){playAudio(e.data)}
-            else{handleMsg(JSON.parse(e.data))}
-        };
-        ws.onerror=()=>{setOrb('error');setStatus('Connection error — tap to retry','error');cleanup()};
-        ws.onclose=(e)=>{
-            console.log('[Bori] Closed',e.code,e.reason);
-            if(isConnected){setStatus('Ended — tap to reconnect','');setOrb('idle')}
-            cleanup();
-        };
-    }catch(err){
-        console.error(err);setOrb('error');setStatus('Failed — tap to retry','error');cleanup();
-    }
-}
-
-async function startMic(){
-    try{
-        // Request mic at 48kHz to match Deepgram config
-        micStream=await navigator.mediaDevices.getUserMedia({
-            audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,sampleRate:48000}
-        });
-        micCtx=new(window.AudioContext||window.webkitAudioContext)({sampleRate:48000});
-        const source=micCtx.createMediaStreamSource(micStream);
-        processor=micCtx.createScriptProcessor(4096,1,1);
-        const nativeRate=micCtx.sampleRate;
-        const targetRate=48000;
-
-        processor.onaudioprocess=(e)=>{
-            if(micMuted||!ws||ws.readyState!==WebSocket.OPEN)return;
-            const input=e.inputBuffer.getChannelData(0);
-
-            // If native rate matches target, send directly
-            if(nativeRate===targetRate){
-                const i16=new Int16Array(input.length);
-                for(let i=0;i<input.length;i++){
-                    const s=Math.max(-1,Math.min(1,input[i]));
-                    i16[i]=s<0?s*0x8000:s*0x7FFF;
-                }
-                ws.send(i16.buffer);
-            } else {
-                // Resample from native to 48kHz
-                const ratio=nativeRate/targetRate;
-                const len=Math.floor(input.length/ratio);
-                const i16=new Int16Array(len);
-                for(let i=0;i<len;i++){
-                    const s=Math.max(-1,Math.min(1,input[Math.floor(i*ratio)]));
-                    i16[i]=s<0?s*0x8000:s*0x7FFF;
-                }
-                ws.send(i16.buffer);
-            }
-        };
-
-        source.connect(processor);
-        processor.connect(micCtx.destination);
-        console.log('[Bori] Mic at '+nativeRate+'Hz, target 48kHz');
-    }catch(err){
-        console.error('[Bori] Mic:',err);
-        setStatus('Microphone access needed','error');setOrb('error');
-    }
-}
-
-function handleMsg(msg){
-    console.log('[Bori]',msg.type,msg.description||'');
-    switch(msg.type){
-        case'AgentStartedSpeaking':
-            isSpeaking=true;micMuted=true;
-            setOrb('speaking');setStatus('Bori is speaking...','speaking');clearWatchdog();
-            // Safety: force unmute after 15 seconds in case AgentStoppedSpeaking never fires
-            if(window._safetyUnmute)clearTimeout(window._safetyUnmute);
-            window._safetyUnmute=setTimeout(()=>{
-                if(micMuted){console.log('[Bori] SAFETY UNMUTE');micMuted=false;isSpeaking=false;setOrb('listening');setStatus('Bori is listening...','active');startWatchdog()}
-            },15000);
-            break;
-        case'AgentAudioDone':
-        case'AgentStoppedSpeaking':
-            isSpeaking=false;micMuted=false;
-            setOrb('listening');setStatus('Bori is listening...','active');startWatchdog();
-            console.log('[Bori] Mic UNMUTED');
-            break;
-        case'UserStartedSpeaking':clearWatchdog();setOrb('listening');setStatus('Listening...','active');console.log('[Bori] User speaking detected');break;
-        case'ConversationText':addLine(msg.role,msg.content);break;
-        case'Error':console.error('[Bori] Error:',msg.description);setStatus('Error: '+(msg.description||'unknown'),'error');break;
-    }
-}
-
-function playAudio(buf){
-    if(!audioCtx)return;
-    const i16=new Int16Array(buf);const f32=new Float32Array(i16.length);
-    for(let i=0;i<i16.length;i++)f32[i]=i16[i]/32768;
-    const ab=audioCtx.createBuffer(1,f32.length,24000);
-    ab.getChannelData(0).set(f32);
-    const src=audioCtx.createBufferSource();src.buffer=ab;src.connect(audioCtx.destination);
-    const now=audioCtx.currentTime;const start=Math.max(now,scheduledTime);
-    src.start(start);scheduledTime=start+ab.duration;
-}
-
-function startWatchdog(){clearWatchdog();watchdog=setTimeout(()=>{if(ws&&ws.readyState===WebSocket.OPEN&&!isSpeaking&&!micMuted)ws.send(JSON.stringify({type:'InjectAgentMessage',message:"Check in gently: '¿Sigues ahí? Still there?'"}))},20000)}
-function clearWatchdog(){if(watchdog){clearTimeout(watchdog);watchdog=null}}
-
-function setOrb(s){orb.className='orb';orbGlow.classList.remove('active');switch(s){case'idle':orbIcon.textContent='🎙️';break;case'connecting':orb.classList.add('connecting');orbIcon.textContent='⏳';break;case'listening':orb.classList.add('listening');orbGlow.classList.add('active');orbIcon.textContent='🎙️';break;case'speaking':orb.classList.add('speaking');orbGlow.classList.add('active');orbIcon.textContent='🗣️';break;case'error':orb.classList.add('error');orbIcon.textContent='⚠️';break}}
-function setStatus(t,c){statusEl.textContent=t;statusEl.className='status-text'+(c?' '+c:'')}
-function addLine(r,t){if(!t)return;const d=document.createElement('div');d.className='transcript-line '+(r==='user'?'user':'agent');d.textContent=(r==='user'?'You: ':'Bori: ')+t;transcriptEl.appendChild(d);transcriptEl.scrollTop=transcriptEl.scrollHeight}
-
-function endSession(){cleanup();document.body.classList.remove('agent-active');ctaText.textContent='Hey Bori';setOrb('idle');setStatus('Tap the orb to start talking','');transcriptEl.classList.remove('open');endBtn.classList.remove('visible')}
-
-function cleanup(){
-    isConnected=false;isSpeaking=false;micMuted=false;clearWatchdog();
-    if(keepAlive){clearInterval(keepAlive);keepAlive=null}
-    if(ws){ws.close();ws=null}
-    if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null}
-    if(processor){processor.disconnect();processor=null}
-    if(micCtx){micCtx.close().catch(()=>{});micCtx=null}
-    if(audioCtx){audioCtx.close().catch(()=>{});audioCtx=null}
-}
-
-console.log('[La Voz PR] Bori v5.1.0 — Exact Deepgram Config, 48kHz, Selena, Gemini');
-</script>
 </body>
 </html>
