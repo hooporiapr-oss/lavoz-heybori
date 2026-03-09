@@ -359,6 +359,7 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
     async function startSession() {
         setOrb('connecting');
         setStatus('Connecting to Bori...', '');
+        transcriptEl.innerHTML = '';
 
         try {
             audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
@@ -403,9 +404,9 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
             };
 
             ws.onclose = (e) => {
-                console.log('[Bori] WebSocket closed:', e.code, e.reason);
+                console.error('[Bori] WebSocket closed. Code:', e.code, 'Reason:', e.reason, 'Clean:', e.wasClean);
                 if (isConnected) {
-                    setStatus('Ended — tap to reconnect', '');
+                    setStatus('Ended (code ' + e.code + ') — tap to reconnect', '');
                     setOrb('idle');
                 }
                 cleanup();
@@ -592,6 +593,7 @@ La Ruta™ is La Voz PR's signature experience — a voice-guided journey throug
         if (ws) { ws.close(); ws = null; }
         if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
         if (scriptProcessor) { scriptProcessor.disconnect(); scriptProcessor = null; }
+        if (audioContext) { audioContext.close().catch(()=>{}); audioContext = null; }
     }
 
     async function requestWake() {
