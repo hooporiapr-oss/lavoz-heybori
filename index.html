@@ -21,26 +21,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);
 h1{font-family:'Fraunces',serif;font-size:clamp(2.2rem,7vw,4rem);font-weight:900;line-height:1.1}
 .gradient-text{background:linear-gradient(135deg,var(--blue),var(--red),var(--blue-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .subtitle{font-size:1.1rem;color:var(--white);margin-top:.5rem}
-
-/* BUTTONS */
 .voice-buttons{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;justify-content:center}
-.voice-btn{padding:.9rem 2rem;border-radius:50px;border:2px solid;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;display:flex;align-items:center;gap:.5rem;min-width:180px;justify-content:center}
+.voice-btn{padding:.9rem 2rem;border-radius:50px;border:2px solid;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;display:flex;align-items:center;gap:.5rem;min-width:180px;justify-content:center;background:transparent}
 .voice-btn:hover{transform:translateY(-2px)}
-.voice-btn.en{background:transparent;border-color:var(--blue);color:var(--blue-bright)}
+.voice-btn.en{border-color:var(--blue);color:var(--blue-bright)}
 .voice-btn.en:hover{background:rgba(46,124,246,.1);box-shadow:0 4px 20px rgba(46,124,246,.3)}
-.voice-btn.es{background:transparent;border-color:var(--red);color:var(--red-bright)}
+.voice-btn.es{border-color:var(--red);color:var(--red-bright)}
 .voice-btn.es:hover{background:rgba(229,62,62,.1);box-shadow:0 4px 20px rgba(229,62,62,.3)}
-.voice-btn.active-en{background:var(--blue);color:white;border-color:var(--blue);animation:pulse-blue 2s ease-in-out infinite}
-.voice-btn.active-es{background:var(--red);color:white;border-color:var(--red);animation:pulse-red 2s ease-in-out infinite}
-.voice-btn.connecting{opacity:.7;pointer-events:none}
+.voice-btn.active-en{background:var(--blue)!important;color:white!important;border-color:var(--blue)!important;animation:pulse-blue 2s ease-in-out infinite}
+.voice-btn.active-es{background:var(--red)!important;color:white!important;border-color:var(--red)!important;animation:pulse-red 2s ease-in-out infinite}
+.voice-btn.connecting{opacity:.7}
 @keyframes pulse-blue{0%,100%{box-shadow:0 0 15px rgba(46,124,246,.3)}50%{box-shadow:0 0 30px rgba(46,124,246,.6)}}
 @keyframes pulse-red{0%,100%{box-shadow:0 0 15px rgba(229,62,62,.3)}50%{box-shadow:0 0 30px rgba(229,62,62,.6)}}
-
-/* STATUS */
 .status{font-size:.85rem;color:var(--muted);min-height:1.2em;margin-top:.75rem;transition:color .3s}
 .status.listening{color:var(--cyan)}
 .status.speaking{color:var(--blue-bright)}
-
 @media(max-width:640px){.bori-icon{width:160px}.voice-btn{min-width:150px;padding:.75rem 1.5rem;font-size:.9rem}}
 @media(orientation:landscape) and (max-height:500px){.bori-icon{display:none}.content{gap:.25rem}h1{font-size:1.8rem}.voice-buttons{margin-top:.75rem}}
 </style>
@@ -62,10 +57,8 @@ h1{font-family:'Fraunces',serif;font-size:clamp(2.2rem,7vw,4rem);font-weight:900
     <p class="status" id="status"></p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" defer></script>
-<script>
-var vapi = null;
-var activeCall = null;
+<script type="module">
+import Vapi from 'https://unpkg.com/@vapi-ai/web@latest/dist/vapi.js';
 
 var PUBLIC_KEY = "2fbc9421-0d38-48e1-97cd-b2c25b072189";
 var ASSISTANTS = {
@@ -73,37 +66,30 @@ var ASSISTANTS = {
     es: "655f4d68-8e45-4039-bfa7-f8f8a5fc3ac2"
 };
 
+var vapi = null;
+var activeCall = null;
 var btnEN = document.getElementById('btnEN');
 var btnES = document.getElementById('btnES');
 var statusEl = document.getElementById('status');
 
-function waitForVapi(cb) {
-    if (window.Vapi) { cb(); return; }
-    var check = setInterval(function() {
-        if (window.Vapi) { clearInterval(check); cb(); }
-    }, 100);
-}
-
-function toggleCall(lang) {
-    waitForVapi(function() {
-        if (activeCall) {
-            endCall();
-            return;
-        }
-        startCall(lang);
-    });
-}
+window.toggleCall = function(lang) {
+    if (activeCall) {
+        endCall();
+        return;
+    }
+    startCall(lang);
+};
 
 function startCall(lang) {
     var btn = lang === 'en' ? btnEN : btnES;
     var otherBtn = lang === 'en' ? btnES : btnEN;
 
     btn.classList.add('connecting');
-    btn.innerHTML = '⏳ Connecting...';
+    btn.innerHTML = '⏳ ' + (lang === 'en' ? 'Connecting...' : 'Conectando...');
     otherBtn.style.display = 'none';
     statusEl.textContent = '';
 
-    vapi = new window.Vapi(PUBLIC_KEY);
+    vapi = new Vapi(PUBLIC_KEY);
 
     vapi.on('call-start', function() {
         activeCall = lang;
@@ -141,7 +127,6 @@ function startCall(lang) {
 function endCall() {
     if (vapi) {
         vapi.stop();
-        vapi = null;
     }
     resetButtons();
 }
@@ -156,7 +141,7 @@ function resetButtons() {
     btnES.style.display = '';
     statusEl.textContent = '';
     statusEl.className = 'status';
-    if (vapi) { vapi = null; }
+    vapi = null;
 }
 </script>
 </body>
