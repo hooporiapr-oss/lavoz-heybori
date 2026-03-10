@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shout Master — La Voz PR Partner Program</title>
+<meta name="description" content="Partner with La Voz PR. Get your business mentioned by Bori — Puerto Rico's bilingual AI voice guide. Three tiers. One voice. The whole island listening.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#06080F;--card:#0c1019;--blue:#2E7CF6;--blue-bright:#5B9BFF;--red:#E53E3E;--red-bright:#FC8181;--white:#F1F5F9;--muted:#94A3B8;--border:rgba(46,124,246,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);line-height:1.6}
+.cosmic-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(46,124,246,.08),transparent),radial-gradient(ellipse 60% 50% at 80% 30%,rgba(229,62,62,.06),transparent),radial-gradient(ellipse 70% 40% at 50% 90%,rgba(46,124,246,.05),transparent)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.nav-logo span{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;color:var(--white)}
+.nav-back{color:var(--muted);text-decoration:none;font-size:.9rem;transition:color .3s}
+.nav-back:hover{color:var(--white)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1.2rem;border-radius:50px;border:1px solid var(--border);background:rgba(46,124,246,.08);font-size:.85rem;color:var(--blue-bright);margin-bottom:1.5rem;animation:fadeInDown .8s ease}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.05;margin-bottom:1rem;animation:fadeInUp 1s ease}
+.hero h1 .blue{color:var(--blue-bright)}
+.hero h1 .red{color:var(--red)}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:600px;margin-bottom:2rem;animation:fadeInUp 1s ease .2s both}
+.hero-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,var(--blue),var(--red));color:white;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .3s,box-shadow .3s;animation:fadeInUp 1s ease .4s both}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(46,124,246,.35)}
+
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION */
+section{position:relative;z-index:1;padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:.75rem}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem}
+.section-desc{font-size:1.05rem;color:var(--muted);max-width:600px;margin-bottom:3rem}
+
+/* HOW IT WORKS */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.how-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;transition:transform .3s,border-color .3s}
+.how-card:hover{transform:translateY(-4px);border-color:var(--blue)}
+.how-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--blue),var(--red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem}
+.how-card h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;margin-bottom:.5rem}
+.how-card p{color:var(--muted);font-size:.9rem}
+
+/* TIERS */
+.tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:start}
+.tier-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem;transition:transform .3s,border-color .3s}
+.tier-card:hover{transform:translateY(-4px)}
+.tier-card.featured{border-color:var(--blue);box-shadow:0 0 40px rgba(46,124,246,.15)}
+.tier-badge{display:inline-block;padding:.25rem .75rem;border-radius:50px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem}
+.tier-badge.t1{background:rgba(46,124,246,.12);color:var(--blue-bright)}
+.tier-badge.t2{background:rgba(229,62,62,.12);color:var(--red-bright)}
+.tier-badge.t3{background:linear-gradient(135deg,rgba(46,124,246,.15),rgba(229,62,62,.15));color:var(--white)}
+.tier-name{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;margin-bottom:.25rem}
+.tier-spanish{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:1rem}
+.tier-price{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;margin-bottom:.25rem}
+.tier-price span{font-size:1rem;font-weight:400;color:var(--muted)}
+.tier-period{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem}
+.tier-features{list-style:none;margin-bottom:2rem}
+.tier-features li{padding:.5rem 0;font-size:.9rem;color:var(--muted);border-bottom:1px solid rgba(46,124,246,.08);display:flex;align-items:flex-start;gap:.5rem}
+.tier-features li::before{content:"✓";color:var(--blue-bright);font-weight:700;flex-shrink:0}
+.tier-card.featured .tier-features li::before{color:var(--red)}
+.tier-cta{display:block;width:100%;padding:.8rem;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;transition:background .3s,border-color .3s}
+.tier-cta:hover{background:rgba(46,124,246,.1);border-color:var(--blue)}
+.tier-card.featured .tier-cta{background:linear-gradient(135deg,var(--blue),var(--red));border:none;color:white}
+.tier-card.featured .tier-cta:hover{box-shadow:0 4px 20px rgba(46,124,246,.4)}
+
+/* WHY */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:transform .3s}
+.why-card:hover{transform:translateY(-3px)}
+.why-icon{font-size:2rem;margin-bottom:1rem}
+.why-card h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+.why-card p{color:var(--muted);font-size:.9rem}
+
+/* CATEGORIES */
+.cat-pills{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.cat-pill{padding:.5rem 1.25rem;border-radius:50px;border:1px solid var(--border);background:var(--card);font-size:.9rem;color:var(--muted);transition:border-color .3s,color .3s}
+.cat-pill.live{border-color:var(--blue);color:var(--blue-bright)}
+
+/* CTA BOTTOM */
+.cta-section{text-align:center;padding:5rem 2rem}
+.cta-section h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1rem}
+.cta-section p{color:var(--muted);max-width:500px;margin:0 auto 2rem}
+
+/* FOOTER */
+.footer{padding:2rem;text-align:center;font-size:.75rem;color:rgba(148,163,184,.4);border-top:1px solid var(--border)}
+.footer a{color:var(--blue-bright);text-decoration:none}
+
+/* MOBILE */
+@media(max-width:768px){
+    .how-grid,.tiers-grid{grid-template-columns:1fr}
+    .why-grid{grid-template-columns:1fr}
+    .hero{padding:6rem 1.5rem 3rem}
+    section{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+<div class="cosmic-bg"></div>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-logo"><span>La Voz PR</span></a>
+    <a href="index.html" class="nav-back">← Talk to Bori</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-badge">The Shout Master — Partner Program</div>
+    <h1>Your Business.<br><span class="blue">Bori's</span> <span class="red">Voice.</span><br>The Whole Island Listening.</h1>
+    <p>Bori talks to thousands of visitors about Puerto Rico every day. When your business is part of the conversation, it's not an ad — it's a recommendation from a trusted friend.</p>
+    <a href="#tiers" class="hero-cta">See Partner Tiers →</a>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+    <div class="section-inner">
+        <div class="section-label">How It Works</div>
+        <div class="section-title">No Banners. No Pop-ups. Just a Voice.</div>
+        <div class="section-desc">Bori is Puerto Rico's AI voice guide. When someone asks about food, tours, events, or nightlife — Bori recommends partners naturally, like a local sharing their favorite spots.</div>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-num">1</div>
+                <h3>You Partner Up</h3>
+                <p>Choose your tier and tell us about your business. We add you to Bori's knowledge — your story, your vibe, what makes you special.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">2</div>
+                <h3>Bori Talks About You</h3>
+                <p>When a visitor asks about your category — restaurants, tours, events, esports — Bori mentions your business naturally in conversation.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">3</div>
+                <h3>Visitors Discover You</h3>
+                <p>No clicks needed. Bori speaks your name, describes what you offer, and tells people how to find you. Word of mouth — powered by AI.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+    <div class="section-inner">
+        <div class="section-label">Partner Tiers</div>
+        <div class="section-title">Three Ways to Be Heard</div>
+        <div class="section-desc">Every tier puts your business in Bori's voice. The question is how loud.</div>
+        <div class="tiers-grid">
+
+            <!-- TIER 1 -->
+            <div class="tier-card">
+                <div class="tier-badge t1">Tier 1</div>
+                <div class="tier-name">La Mención</div>
+                <div class="tier-spanish">The Mention</div>
+                <div class="tier-price">$99 <span>/mo</span></div>
+                <div class="tier-period">Billed monthly</div>
+                <ul class="tier-features">
+                    <li>Bori mentions your business when the topic comes up</li>
+                    <li>Listed on lavozpr.com/partners</li>
+                    <li>Business name + what you offer in Bori's knowledge</li>
+                    <li>Category-based triggers (food, tours, events, etc.)</li>
+                </ul>
+                <a href="mailto:partners@lavozpr.com?subject=La Mención — Partner Inquiry" class="tier-cta">Get Started</a>
+            </div>
+
+            <!-- TIER 2 -->
+            <div class="tier-card featured">
+                <div class="tier-badge t2">Tier 2 — Most Popular</div>
+                <div class="tier-name">El Shout</div>
+                <div class="tier-spanish">The Shout</div>
+                <div class="tier-price">$249 <span>/mo</span></div>
+                <div class="tier-period">Billed monthly</div>
+                <ul class="tier-features">
+                    <li>Everything in La Mención</li>
+                    <li>Bori proactively recommends you — not just when asked</li>
+                    <li>Featured placement with logo on partners page</li>
+                    <li>Monthly mention report</li>
+                    <li>Priority in Bori's recommendations</li>
+                </ul>
+                <a href="mailto:partners@lavozpr.com?subject=El Shout — Partner Inquiry" class="tier-cta">Get Started</a>
+            </div>
+
+            <!-- TIER 3 -->
+            <div class="tier-card">
+                <div class="tier-badge t3">Tier 3 — Premium</div>
+                <div class="tier-name">La Voz</div>
+                <div class="tier-spanish">The Voice</div>
+                <div class="tier-price">$499 <span>/mo</span></div>
+                <div class="tier-period">Billed monthly</div>
+                <ul class="tier-features">
+                    <li>Everything in El Shout</li>
+                    <li>Dedicated conversation topic — Bori gives your full story</li>
+                    <li>"Tell me about [your business]" triggers a custom pitch</li>
+                    <li>Social media shoutouts from La Voz PR</li>
+                    <li>Priority placement on partners page</li>
+                    <li>Quarterly strategy call with GoStar Digital</li>
+                </ul>
+                <a href="mailto:partners@lavozpr.com?subject=La Voz — Partner Inquiry" class="tier-cta">Get Started</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- WHY -->
+<section>
+    <div class="section-inner">
+        <div class="section-label">Why The Shout Master</div>
+        <div class="section-title">This Isn't Advertising. It's Conversation.</div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon">🗣️</div>
+                <h3>Voice, Not Banners</h3>
+                <p>People trust recommendations from a voice they know. Bori doesn't sell — he shares what he loves about the island, including your business.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🇵🇷</div>
+                <h3>Built for Puerto Rico</h3>
+                <p>This isn't a generic ad platform. La Voz PR is made by Puerto Ricans, for Puerto Rico. Every mention is culturally authentic.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">🎯</div>
+                <h3>Context, Not Interruption</h3>
+                <p>Bori only mentions you when it's relevant. Someone asks about food? Your restaurant comes up. That's the right moment, every time.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon">📈</div>
+                <h3>Growing Audience</h3>
+                <p>La Voz PR is expanding across the island. More visitors, more conversations, more mentions for your business. Get in early.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORIES -->
+<section>
+    <div class="section-inner" style="text-align:center">
+        <div class="section-label">Partner Categories</div>
+        <div class="section-title">Who Bori Talks About</div>
+        <div class="section-desc" style="margin:0 auto 2rem">From lechoneras to esports leagues — if it's part of Puerto Rico, Bori knows about it.</div>
+        <div class="cat-pills">
+            <span class="cat-pill live">🎮 Esports — LIVE</span>
+            <span class="cat-pill">🍽️ Restaurants</span>
+            <span class="cat-pill">🏨 Lodging</span>
+            <span class="cat-pill">🗺️ Tours</span>
+            <span class="cat-pill">🎉 Events</span>
+            <span class="cat-pill">🏀 Sports</span>
+            <span class="cat-pill">🎵 Music & Nightlife</span>
+            <span class="cat-pill">🛍️ Shopping</span>
+            <span class="cat-pill">🏖️ Beaches & Adventures</span>
+            <span class="cat-pill">🚗 Transportation</span>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Ready to Be Part of <span style="color:var(--blue-bright)">La Voz</span>?</h2>
+    <p>Join The Shout Master and let Bori tell the island about your business. No contracts. Cancel anytime.</p>
+    <a href="mailto:partners@lavozpr.com?subject=Shout Master — I Want In" class="hero-cta">Become a Partner →</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>GoStar Digital LLC, Puerto Rico &nbsp;|&nbsp; <a href="index.html">lavozpr.com</a> &nbsp;|&nbsp; partners@lavozpr.com</p>
+</div>
+
+</body>
+</html>
