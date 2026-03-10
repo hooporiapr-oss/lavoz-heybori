@@ -8,31 +8,34 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#06080F;--blue:#2E7CF6;--blue-bright:#5B9BFF;--purple:#8B5CF6;--purple-bright:#A78BFA;--cyan:#22D3EE;--white:#F1F5F9;--muted:#94A3B8}
+:root{--deep:#06080F;--blue:#2E7CF6;--red:#E53E3E;--blue-bright:#5B9BFF;--purple:#8B5CF6;--purple-bright:#A78BFA;--cyan:#22D3EE;--white:#F1F5F9;--muted:#94A3B8}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
-.cosmic-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(46,124,246,.08),transparent),radial-gradient(ellipse 60% 50% at 80% 30%,rgba(139,92,246,.07),transparent),radial-gradient(ellipse 70% 40% at 50% 90%,rgba(34,211,238,.05),transparent)}
-.content{position:relative;z-index:1;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:.75rem}
-h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1}
-.gradient-text{background:linear-gradient(135deg,var(--blue-bright),var(--purple-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tagline{font-size:1.1rem;color:var(--muted);max-width:480px;line-height:1.6}
-.tagline em{color:var(--cyan);font-style:normal}
-.session-note{font-size:.75rem;color:rgba(148,163,184,.4);margin-top:.5rem}
+.cosmic-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(46,124,246,.08),transparent),radial-gradient(ellipse 60% 50% at 80% 30%,rgba(229,62,62,.06),transparent),radial-gradient(ellipse 70% 40% at 50% 90%,rgba(46,124,246,.05),transparent)}
+.content{position:relative;z-index:1;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.bori-icon{width:200px;height:auto;margin-bottom:.5rem}
+h1{font-family:'Fraunces',serif;font-size:clamp(2.2rem,7vw,4rem);font-weight:900;line-height:1.1}
+.gradient-text{background:linear-gradient(135deg,var(--blue),var(--red),var(--blue-bright));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tagline{font-size:1.05rem;color:var(--white);max-width:480px;line-height:1.7;margin-top:.5rem}
+.tagline em{font-style:normal}
+.tagline .blue{color:var(--blue-bright)}
+.tagline .red{color:var(--red)}
 .footer{position:fixed;bottom:0;left:0;right:0;padding:1rem;text-align:center;font-size:.7rem;color:rgba(148,163,184,.35);background:linear-gradient(to top,var(--deep),transparent);z-index:1}
+@media(max-width:640px){.bori-icon{width:160px}}
 </style>
 </head>
 <body>
 <div class="cosmic-bg"></div>
 <div class="content">
+    <img src="icon.png" alt="Bori — La Voz PR" class="bori-icon">
     <h1>The <span class="gradient-text">Voice</span> of Puerto Rico</h1>
-    <p class="tagline">La isla real — not the postcard version.<br>78 pueblos, every flavor, every story.<br>In English, en español, <em>or both</em>.<br>Tap the mic. Say hey. <em>¡Dime!</em></p>
-    <p class="session-note">10 min per conversation — come back anytime, Bori never runs out of stories</p>
+    <p class="tagline">La isla real — not the postcard version.<br>78 pueblos, every flavor, every story.<br>In <span class="blue">English</span>, en <span class="red">Español</span>, <em>or both</em>.<br><span class="red">Conversando.</span> <span class="blue">In Conversation.</span></p>
 </div>
 
 <script>
 var vapiInstance = null;
 var assistant = "655f4d68-8e45-4039-bfa7-f8f8a5fc3ac2";
-var apiKey = "2fbc9421-0d38-48e1-97cd-b2c25b072189";
+var apiKey = "PASTE_KEY_HERE";
 var buttonConfig = {
     position: "bottom",
     offset: "40px",
