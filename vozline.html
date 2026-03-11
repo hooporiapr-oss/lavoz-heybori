@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VozLine — AI Voice Agents for Your Business | GoStar Digital</title>
+<meta name="description" content="VozLine by GoStar Digital — AI-powered voice agents that answer your business calls 24/7 in English and Spanish.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#080B12;--card:#0d1117;--green:#10B981;--green-bright:#34D399;--blue:#2E7CF6;--white:#F1F5F9;--muted:#94A3B8;--border:rgba(16,185,129,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--deep);color:var(--white);line-height:1.6}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 30% 10%,rgba(16,185,129,.06),transparent),radial-gradient(ellipse 60% 50% at 70% 80%,rgba(46,124,246,.05),transparent)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,11,18,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;color:var(--white);text-decoration:none}
+.nav-brand span{color:var(--green-bright)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-link{color:var(--muted);text-decoration:none;font-size:.9rem}
+.nav-link:hover{color:var(--white)}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:50px;overflow:hidden}
+.lang-btn{padding:.3rem .75rem;font-size:.8rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .3s}
+.lang-btn.active{background:var(--green);color:white}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem}
+.hero-tag{display:inline-block;padding:.4rem 1.2rem;border-radius:50px;border:1px solid var(--border);background:rgba(16,185,129,.08);font-size:.8rem;color:var(--green-bright);margin-bottom:2rem;letter-spacing:.05em}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.05;margin-bottom:1.25rem;max-width:800px}
+.hero h1 .green{color:var(--green-bright)}
+.hero-sub{font-size:1.2rem;color:var(--muted);max-width:600px;margin-bottom:1rem}
+.hero-sub2{font-size:1rem;color:var(--muted);max-width:550px;margin-bottom:2.5rem}
+.hero-cta{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.25rem;background:var(--green);color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .3s,box-shadow .3s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(16,185,129,.3)}
+.hero-proof{margin-top:3rem;padding:1.5rem 2rem;border:1px solid var(--border);border-radius:12px;background:var(--card);max-width:500px}
+.hero-proof p{font-size:.95rem;color:var(--muted)}
+.hero-proof a{color:var(--green-bright);text-decoration:none;font-weight:600}
+section{position:relative;z-index:1;padding:5rem 2rem}
+.inner{max-width:1000px;margin:0 auto}
+.label{font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--green-bright);margin-bottom:.75rem}
+.title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem}
+.desc{font-size:1.05rem;color:var(--muted);max-width:600px;margin-bottom:3rem}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:transform .3s,border-color .3s}
+.feature:hover{transform:translateY(-4px);border-color:var(--green)}
+.feature-icon{font-size:2rem;margin-bottom:1rem}
+.feature h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;margin-bottom:.5rem}
+.feature p{color:var(--muted);font-size:.9rem}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.how-step{text-align:center;padding:1.5rem}
+.how-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;color:var(--green-bright);margin-bottom:.5rem}
+.how-step h3{font-size:1rem;font-weight:600;margin-bottom:.4rem}
+.how-step p{color:var(--muted);font-size:.85rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:start}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem 2rem;transition:transform .3s}
+.price-card:hover{transform:translateY(-4px)}
+.price-card.pop{border-color:var(--green);box-shadow:0 0 40px rgba(16,185,129,.12)}
+.price-tag{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--green-bright);margin-bottom:1rem}
+.price-name{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;margin-bottom:.25rem}
+.price-desc{color:var(--muted);font-size:.85rem;margin-bottom:1rem}
+.price-amount{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;margin-bottom:.25rem}
+.price-amount span{font-size:1rem;font-weight:400;color:var(--muted)}
+.price-period{font-size:.8rem;color:var(--muted);margin-bottom:1.5rem}
+.price-features{list-style:none;margin-bottom:2rem}
+.price-features li{padding:.4rem 0;font-size:.85rem;color:var(--muted);display:flex;align-items:flex-start;gap:.4rem}
+.price-features li::before{content:"✓";color:var(--green-bright);font-weight:700;flex-shrink:0}
+.price-cta{display:block;width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;transition:all .3s}
+.price-cta:hover{background:rgba(16,185,129,.1);border-color:var(--green)}
+.price-card.pop .price-cta{background:var(--green);border:none;color:white}
+.price-card.pop .price-cta:hover{box-shadow:0 4px 20px rgba(16,185,129,.3)}
+.proof-section{text-align:center}
+.proof-box{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem 3rem;max-width:600px}
+.proof-box h3{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;margin-bottom:.75rem}
+.proof-box p{color:var(--muted);font-size:1rem;margin-bottom:1.5rem}
+.proof-link{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;background:var(--blue);color:white;border-radius:8px;text-decoration:none;font-weight:600;transition:transform .3s}
+.proof-link:hover{transform:translateY(-2px)}
+.cta-bottom{text-align:center;padding:5rem 2rem;position:relative;z-index:1}
+.cta-bottom h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1rem}
+.cta-bottom p{color:var(--muted);max-width:500px;margin:0 auto 2rem}
+.footer{padding:2rem;text-align:center;font-size:.8rem;color:#F1F5F9;border-top:1px solid var(--border)}
+.footer a{color:var(--green-bright);text-decoration:none}
+.es{display:none}
+@media(max-width:768px){.features,.pricing-grid{grid-template-columns:1fr}.how-grid{grid-template-columns:repeat(2,1fr)}.hero{padding:6rem 1.5rem 3rem}section{padding:3rem 1.5rem}.proof-box{padding:1.5rem}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<nav>
+    <a href="#" class="nav-brand">Voz<span>Line</span></a>
+    <div class="nav-right">
+        <a href="#pricing" class="nav-link"><span class="en">Pricing</span><span class="es">Precios</span></a>
+        <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('es')">ES</button>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-tag">By GoStar Digital LLC, Puerto Rico</div>
+    <h1>
+        <span class="en">Your Business.<br><span class="green">Always Answering.</span><br>Siempre Contestando.</span>
+        <span class="es">Tu Negocio.<br><span class="green">Siempre Contestando.</span><br>Always Answering.</span>
+    </h1>
+    <p class="hero-sub">
+        <span class="en">AI voice agents that answer your business calls 24/7 — in English, Spanish, or both. No missed calls. No hold music. No hiring.</span>
+        <span class="es">Agentes de voz AI que contestan las llamadas de tu negocio 24/7 — en inglés, español, o ambos. Sin llamadas perdidas. Sin música de espera. Sin contratar.</span>
+    </p>
+    <p class="hero-sub2">
+        <span class="en">Your customers call. Your AI answers. Trained on YOUR business — your menu, your services, your hours, your personality.</span>
+        <span class="es">Tus clientes llaman. Tu AI contesta. Entrenado en TU negocio — tu menú, tus servicios, tu horario, tu personalidad.</span>
+    </p>
+    <a href="#pricing" class="hero-cta"><span class="en">See Plans →</span><span class="es">Ver Planes →</span></a>
+
+    <div class="hero-proof">
+        <p><span class="en">Don't take our word for it — <strong>talk to Bori</strong>, our live AI voice agent for Puerto Rico. Same technology. Same quality. Your business gets its own.</span><span class="es">No nos creas a nosotros — <strong>habla con Bori</strong>, nuestro agente de voz AI en vivo para Puerto Rico. Misma tecnología. Misma calidad. Tu negocio obtiene el suyo.</span></p>
+        <p style="margin-top:.75rem"><a href="https://lavozpr.com" target="_blank"><span class="en">→ Try Hey Bori live at lavozpr.com</span><span class="es">→ Prueba Hey Bori en vivo en lavozpr.com</span></a></p>
+    </div>
+</div>
+
+<section>
+    <div class="inner">
+        <div class="label"><span class="en">Why VozLine</span><span class="es">Por Qué VozLine</span></div>
+        <div class="title"><span class="en">A Receptionist That Never Sleeps</span><span class="es">Una Recepcionista Que Nunca Duerme</span></div>
+        <div class="desc"><span class="en">Your AI voice agent knows your business inside out. It answers calls, takes messages, books appointments, and speaks your customer's language — 24 hours a day, 7 days a week.</span><span class="es">Tu agente de voz AI conoce tu negocio por dentro y por fuera. Contesta llamadas, toma mensajes, agenda citas, y habla el idioma de tu cliente — 24 horas al día, 7 días a la semana.</span></div>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🕐</div>
+                <h3><span class="en">24/7 Coverage</span><span class="es">Cobertura 24/7</span></h3>
+                <p><span class="en">Never miss a call again. Nights, weekends, holidays — your AI answers every time. No voicemail, no hold music, no frustrated customers.</span><span class="es">Nunca pierdas una llamada. Noches, fines de semana, feriados — tu AI contesta siempre. Sin buzón de voz, sin música de espera, sin clientes frustrados.</span></p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🇵🇷</div>
+                <h3><span class="en">Bilingual Native</span><span class="es">Bilingüe Nativo</span></h3>
+                <p><span class="en">Fluent in English and Puerto Rican Spanish. Your AI switches languages naturally, just like your best employee. Customers feel at home.</span><span class="es">Fluido en inglés y español puertorriqueño. Tu AI cambia de idioma naturalmente, como tu mejor empleado. Los clientes se sienten en casa.</span></p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🧠</div>
+                <h3><span class="en">Trained on YOUR Business</span><span class="es">Entrenado en TU Negocio</span></h3>
+                <p><span class="en">We load your menu, services, hours, FAQs, pricing — everything. Your AI doesn't give generic answers. It gives YOUR answers.</span><span class="es">Cargamos tu menú, servicios, horario, preguntas frecuentes, precios — todo. Tu AI no da respuestas genéricas. Da TUS respuestas.</span></p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📞</div>
+                <h3><span class="en">Real Conversations</span><span class="es">Conversaciones Reales</span></h3>
+                <p><span class="en">Not a phone tree. Not "press 1 for English." A real voice that listens, understands, and responds like a human. Powered by the world's best AI.</span><span class="es">No es un menú telefónico. No es "presione 1 para español." Una voz real que escucha, entiende, y responde como un humano. Impulsado por la mejor AI del mundo.</span></p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3><span class="en">Call Reports</span><span class="es">Reportes de Llamadas</span></h3>
+                <p><span class="en">Know who called, what they asked, and what they needed. Daily reports delivered to your inbox. Never wonder what you missed.</span><span class="es">Sabe quién llamó, qué preguntó, y qué necesitaba. Reportes diarios en tu correo. Nunca te preguntes qué te perdiste.</span></p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3><span class="en">Live in 48 Hours</span><span class="es">En Vivo en 48 Horas</span></h3>
+                <p><span class="en">No months of setup. No complex installations. Send us your business info and we build your agent. Live on your phone line in two days.</span><span class="es">Sin meses de configuración. Sin instalaciones complejas. Envíanos tu info y construimos tu agente. En vivo en tu línea en dos días.</span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="inner">
+        <div class="label"><span class="en">How It Works</span><span class="es">Cómo Funciona</span></div>
+        <div class="title"><span class="en">Four Steps. Your AI Is Answering.</span><span class="es">Cuatro Pasos. Tu AI Está Contestando.</span></div>
+        <div class="how-grid">
+            <div class="how-step">
+                <div class="how-num">1</div>
+                <h3><span class="en">Tell Us About Your Business</span><span class="es">Cuéntanos de Tu Negocio</span></h3>
+                <p><span class="en">Menu, services, hours, FAQs, personality — we learn everything about you.</span><span class="es">Menú, servicios, horario, preguntas frecuentes — aprendemos todo sobre ti.</span></p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">2</div>
+                <h3><span class="en">We Build Your Agent</span><span class="es">Construimos Tu Agente</span></h3>
+                <p><span class="en">We create your AI voice agent trained specifically on your business knowledge.</span><span class="es">Creamos tu agente de voz AI entrenado específicamente en tu negocio.</span></p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">3</div>
+                <h3><span class="en">Connect Your Phone</span><span class="es">Conectamos Tu Teléfono</span></h3>
+                <p><span class="en">We connect the agent to your business phone number. No hardware needed.</span><span class="es">Conectamos el agente a tu número de teléfono. Sin equipo adicional.</span></p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">4</div>
+                <h3><span class="en">Your AI Answers</span><span class="es">Tu AI Contesta</span></h3>
+                <p><span class="en">Customers call. Your AI answers. 24/7. Bilingual. Trained on YOU.</span><span class="es">Los clientes llaman. Tu AI contesta. 24/7. Bilingüe. Entrenado en TI.</span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="pricing">
+    <div class="inner">
+        <div class="label"><span class="en">Plans</span><span class="es">Planes</span></div>
+        <div class="title"><span class="en">Simple Pricing. Real Results.</span><span class="es">Precios Simples. Resultados Reales.</span></div>
+        <div class="desc"><span class="en">No per-minute surprises. No hidden fees. One monthly price for your AI voice agent.</span><span class="es">Sin sorpresas por minuto. Sin cargos ocultos. Un precio mensual por tu agente de voz AI.</span></div>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="price-tag">Starter</div>
+                <div class="price-name">La Línea</div>
+                <div class="price-desc"><span class="en">Perfect for small businesses</span><span class="es">Perfecto para negocios pequeños</span></div>
+                <div class="price-amount">$199 <span>/mo</span></div>
+                <div class="price-period"><span class="en">Billed monthly</span><span class="es">Facturado mensualmente</span></div>
+                <ul class="price-features">
+                    <li><span class="en">AI voice agent trained on your business</span><span class="es">Agente de voz AI entrenado en tu negocio</span></li>
+                    <li><span class="en">Bilingual — English and Spanish</span><span class="es">Bilingüe — inglés y español</span></li>
+                    <li><span class="en">Up to 200 calls per month</span><span class="es">Hasta 200 llamadas por mes</span></li>
+                    <li><span class="en">Business hours coverage</span><span class="es">Cobertura en horario comercial</span></li>
+                    <li><span class="en">Weekly call reports</span><span class="es">Reportes semanales de llamadas</span></li>
+                    <li><span class="en">Email support</span><span class="es">Soporte por correo</span></li>
+                </ul>
+                <a href="mailto:vozline@gostardigital.com?subject=La Línea — VozLine" class="price-cta"><span class="en">Get Started</span><span class="es">Comenzar</span></a>
+            </div>
+            <div class="price-card pop">
+                <div class="price-tag"><span class="en">Most Popular</span><span class="es">Más Popular</span></div>
+                <div class="price-name">La Central</div>
+                <div class="price-desc"><span class="en">For growing businesses</span><span class="es">Para negocios en crecimiento</span></div>
+                <div class="price-amount">$399 <span>/mo</span></div>
+                <div class="price-period"><span class="en">Billed monthly</span><span class="es">Facturado mensualmente</span></div>
+                <ul class="price-features">
+                    <li><span class="en">Everything in La Línea</span><span class="es">Todo lo de La Línea</span></li>
+                    <li><span class="en">24/7 coverage — nights, weekends, holidays</span><span class="es">Cobertura 24/7 — noches, fines de semana, feriados</span></li>
+                    <li><span class="en">Up to 500 calls per month</span><span class="es">Hasta 500 llamadas por mes</span></li>
+                    <li><span class="en">Appointment booking</span><span class="es">Reservación de citas</span></li>
+                    <li><span class="en">Daily call reports</span><span class="es">Reportes diarios de llamadas</span></li>
+                    <li><span class="en">Priority support</span><span class="es">Soporte prioritario</span></li>
+                    <li><span class="en">Monthly strategy call</span><span class="es">Llamada estratégica mensual</span></li>
+                </ul>
+                <a href="mailto:vozline@gostardigital.com?subject=La Central — VozLine" class="price-cta"><span class="en">Get Started</span><span class="es">Comenzar</span></a>
+            </div>
+            <div class="price-card">
+                <div class="price-tag">Enterprise</div>
+                <div class="price-name">La Torre</div>
+                <div class="price-desc"><span class="en">For high-volume operations</span><span class="es">Para operaciones de alto volumen</span></div>
+                <div class="price-amount">$799 <span>/mo</span></div>
+                <div class="price-period"><span class="en">Billed monthly</span><span class="es">Facturado mensualmente</span></div>
+                <ul class="price-features">
+                    <li><span class="en">Everything in La Central</span><span class="es">Todo lo de La Central</span></li>
+                    <li><span class="en">Unlimited calls</span><span class="es">Llamadas ilimitadas</span></li>
+                    <li><span class="en">Multiple departments / routing</span><span class="es">Múltiples departamentos / enrutamiento</span></li>
+                    <li><span class="en">Custom voice personality</span><span class="es">Personalidad de voz personalizada</span></li>
+                    <li><span class="en">CRM integration</span><span class="es">Integración con CRM</span></li>
+                    <li><span class="en">Real-time call reports</span><span class="es">Reportes de llamadas en tiempo real</span></li>
+                    <li><span class="en">Dedicated account manager</span><span class="es">Gerente de cuenta dedicado</span></li>
+                    <li><span class="en">Quarterly business review</span><span class="es">Revisión trimestral de negocio</span></li>
+                </ul>
+                <a href="mailto:vozline@gostardigital.com?subject=La Torre — VozLine" class="price-cta"><span class="en">Get Started</span><span class="es">Comenzar</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="inner proof-section">
+        <div class="label"><span class="en">See It Live</span><span class="es">Míralo en Vivo</span></div>
+        <div class="title"><span class="en">Don't Take Our Word For It</span><span class="es">No Nos Creas a Nosotros</span></div>
+        <div class="proof-box">
+            <h3><span class="en">Talk to Bori — Our Live AI Voice Agent</span><span class="es">Habla con Bori — Nuestro Agente de Voz AI en Vivo</span></h3>
+            <p><span class="en">Bori is the AI voice guide for La Voz PR. Same technology that powers VozLine. Go talk to him right now and hear what your business AI will sound like.</span><span class="es">Bori es el guía de voz AI de La Voz PR. La misma tecnología que impulsa VozLine. Habla con él ahora mismo y escucha cómo sonará el AI de tu negocio.</span></p>
+            <a href="https://lavozpr.com" target="_blank" class="proof-link"><span class="en">🎙️ Try Hey Bori at lavozpr.com</span><span class="es">🎙️ Prueba Hey Bori en lavozpr.com</span></a>
+        </div>
+    </div>
+</section>
+
+<div class="cta-bottom">
+    <h2><span class="en">Stop Missing Calls.<br><span style="color:var(--green-bright)">Start Answering.</span></span><span class="es">Deja de Perder Llamadas.<br><span style="color:var(--green-bright)">Empieza a Contestar.</span></span></h2>
+    <p><span class="en">Your AI voice agent is 48 hours away. Bilingual. 24/7. Trained on your business. No contracts — cancel anytime.</span><span class="es">Tu agente de voz AI está a 48 horas. Bilingüe. 24/7. Entrenado en tu negocio. Sin contratos — cancela cuando quieras.</span></p>
+    <a href="mailto:vozline@gostardigital.com?subject=VozLine — I Want In" class="hero-cta"><span class="en">Get My AI Agent →</span><span class="es">Quiero Mi Agente AI →</span></a>
+</div>
+
+<div class="footer">
+    <p>VozLine by <a href="https://gostardigital.com">GoStar Digital LLC</a>, Puerto Rico &nbsp;|&nbsp; vozline@gostardigital.com</p>
+</div>
+
+<script>
+function setLang(lang) {
+    document.querySelectorAll('.en').forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+    document.querySelectorAll('.es').forEach(el => el.style.display = lang === 'es' ? 'inline' : 'none');
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+    document.documentElement.lang = lang;
+}
+setLang('en');
+</script>
+</body>
+</html>
